@@ -16,6 +16,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
     protected $composer;
     protected $io;
+    protected $once = false;
 
     /**
      * {@inheritdoc}
@@ -25,7 +26,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $this->composer = $composer;
         $this->io = $io;
 
-        $this->io->write('<comment>'. __METHOD__ .'</comment>');
+        //$this->io->write('<comment>'. __METHOD__ .'</comment>');
     }
 
     /**
@@ -36,15 +37,19 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         return [
             ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
             ScriptEvents::POST_UPDATE_CMD => 'onPostInstall',
-            ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
-            PluginEvents::COMMAND => 'onPostInstall',
+            //ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
+            //PluginEvents::COMMAND => 'onPostInstall',
         ];
     }
 
     public function onPostInstall($event)
     {
-        $this->io->write('<comment>'. $event->getName() . '</comment>');
-
+        if (!$this->once) {
+            $this->io->write('<comment>' . $event->getName() . '</comment>');
+        }
+        else {
+            $this->io->write('<comment>' . $event->getName() . ' jo toisen kerran!</comment>');
+        }
         /*$query = [
             sprintf(
                 "\n  <question>%s</question>\n",
