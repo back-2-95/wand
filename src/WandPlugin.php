@@ -8,6 +8,7 @@ use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
 
 class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -21,6 +22,8 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     {
         $this->composer = $composer;
         $this->io = $io;
+
+        $this->io->write('<comment>'. __METHOD__ .'</comment>');
     }
 
     /**
