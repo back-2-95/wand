@@ -1,0 +1,34 @@
+{
+    "name": "back-2-95/wand",
+    "type": "composer-plugin",
+    "prefer-stable": true,
+    "require": {
+        "composer-plugin-api": "^1.0",
+        "composer/installers": "^1.6.0",
+        "cweagans/composer-patches": "^1.6.5",
+        "php": ">=7.1",
+        "wikimedia/composer-merge-plugin": "^1.4.1"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marko Korhonen",
+            "email": "marko.korhonen@druid.fi"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": {
+        "packagist.org": {
+            "type": "composer",
+            "url": "https://repo-eu-uk-1.packagist.org"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Druidfi\\Composer\\": "src/"
+        }
+    }
+}
