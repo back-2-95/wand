@@ -37,6 +37,7 @@
     },
     "scripts": {
         "test": [
+            "git add . && git commit -m\"test\" && git push",
             "@composer clear-cache --ansi",
             "@composer install -d test --no-suggest --ansi",
             "@composer install -d test --no-suggest --ansi",
