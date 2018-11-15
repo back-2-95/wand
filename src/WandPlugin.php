@@ -18,6 +18,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     protected $composer;
     protected $io;
     static $once = false;
+    static $webroot = 'public';
 
     /**
      * {@inheritdoc}
@@ -38,32 +39,32 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
             umask($oldmask);
             $this->io->write("Create a sites/default/files directory with chmod 0777");
         }
-        else {
-            $this->io->write("sites/default/files directory already exists");
-        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents() : array
     {
         return [
             ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
-            ScriptEvents::POST_UPDATE_CMD => 'onPostInstall',
-            //ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
-            //PluginEvents::COMMAND => 'onPostInstall',
+            ScriptEvents::POST_UPDATE_CMD => 'onPostUpdate',
         ];
     }
 
-    public function onPostInstall($event)
+    public function onPostInstall(Event $event)
+    {
+        $this->io->write('<comment>onPostInstall</comment>');
+    }
+
+    public function onPostUpdate(Event $event)
     {
         if (!self::$once) {
-            $this->io->write('<comment>' . $event->getName() . '</comment>');
+            $this->io->write('<comment>onPostUpdate</comment>');
             self::$once = true;
         }
         else {
-            $this->io->write('<comment>' . $event->getName() . ' jo toisen kerran!</comment>');
+            $this->io->write('<comment>onPostUpdate jo toisen kerran!</comment>');
         }
         /*$query = [
             sprintf(
@@ -81,7 +82,13 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $this->io->write('<error>You answered '. $answer .'</error>');*/
     }
 
-    protected static function getDrupalRoot($project_root) {
-        return $project_root . '/public';
+    /**
+     * Get absolute path to Drupal webroot.
+     *
+     * @param $project_root
+     * @return string Absolute path to webroot.
+     */
+    protected static function getDrupalRoot($project_root) : string {
+        return $project_root . DIRECTORY_SEPARATOR . self::$webroot;
     }
 }
