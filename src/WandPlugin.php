@@ -11,6 +11,7 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Symfony\Component\Filesystem\Filesystem;
 
 class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -27,6 +28,19 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $this->io = $io;
 
         //$this->io->write('<comment>'. __METHOD__ .'</comment>');
+        $fs = new Filesystem();
+        $root = static::getDrupalRoot(getcwd());
+
+        // Create the files directory with chmod 0777
+        if (!$fs->exists($root . '/sites/default/files')) {
+            $oldmask = umask(0);
+            $fs->mkdir($root . '/sites/default/files', 0777);
+            umask($oldmask);
+            $this->io->write("Create a sites/default/files directory with chmod 0777");
+        }
+        else {
+            $this->io->write("sites/default/files directory already exists");
+        }
     }
 
     /**
@@ -65,5 +79,9 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $answer = $this->io->ask(implode($query), '2');
 
         $this->io->write('<error>You answered '. $answer .'</error>');*/
+    }
+
+    protected static function getDrupalRoot($project_root) {
+        return $project_root . '/public';
     }
 }
