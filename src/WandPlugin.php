@@ -59,13 +59,13 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 
     public function onPostInstall(Event $event)
     {
-        $this->io->write('<comment>onPostInstall</comment>');
+        $this->io->write('<comment>onPostInstall blääh</comment>');
     }
 
     public function onPostUpdate(Event $event)
     {
         if (!self::$once) {
-            $this->io->write('<comment>onPostUpdate</comment>');
+            $this->io->write('<comment>onPostUpdate ekan kerran</comment>');
             self::$once = true;
         }
         else {
