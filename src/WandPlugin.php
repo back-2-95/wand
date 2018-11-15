@@ -34,16 +34,18 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
+            ScriptEvents::POST_UPDATE_CMD => 'onPostInstall',
             ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
-            //PluginEvents::COMMAND => 'onPostInstall',
+            PluginEvents::COMMAND => 'onPostInstall',
         ];
     }
 
     public function onPostInstall(Event $event)
     {
-        $this->io->write('<comment>'. ScriptEvents::POST_AUTOLOAD_DUMP . '</comment>');
+        $this->io->write('<comment>'. $event->getName() . '</comment>');
 
-        $query = [
+        /*$query = [
             sprintf(
                 "\n  <question>%s</question>\n",
                 'What type of installation would you like?'
@@ -56,6 +58,6 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 
         $answer = $this->io->ask(implode($query), '2');
 
-        $this->io->write('<error>You answered '. $answer .'</error>');
+        $this->io->write('<error>You answered '. $answer .'</error>');*/
     }
 }

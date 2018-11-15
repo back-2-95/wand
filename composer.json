@@ -10,6 +10,9 @@
         "roave/security-advisories": "dev-master",
         "wikimedia/composer-merge-plugin": "^1.4.1"
     },
+    "require-dev": {
+        "composer/composer": "dev-master"
+    },
     "license": "MIT",
     "authors": [
         {
