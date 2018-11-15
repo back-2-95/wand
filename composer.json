@@ -34,5 +34,12 @@
     },
     "extra": {
         "class": "Druidfi\\Composer\\WandPlugin"
+    },
+    "scripts": {
+        "test": [
+            "rm -rf test/vendor test/composer.lock",
+            "@composer clear-cache --ansi",
+            "@composer install -d test --no-suggest --ansi"
+        ]
     }
 }

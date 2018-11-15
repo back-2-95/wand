@@ -1,0 +1,19 @@
+{
+  "name": "wand-test",
+  "require": {
+    "php": "^7.1",
+    "back-2-95/wand": "dev-master"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    {
+      "type": "vcs",
+      "url":  "git@github.com:back-2-95/wand.git"
+    }
+  ]
+}

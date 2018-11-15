@@ -46,6 +46,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     {
         if (!$this->once) {
             $this->io->write('<comment>' . $event->getName() . '</comment>');
+            $this->once = true;
         }
         else {
             $this->io->write('<comment>' . $event->getName() . ' jo toisen kerran!</comment>');

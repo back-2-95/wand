@@ -1,4 +1,6 @@
 /.idea/
+/test/vendor/
+/test/composer.lock
 /vendor/
 /.DS_Store
 /composer.lock
