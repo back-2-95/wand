@@ -31,10 +31,8 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        $this->io->write('<comment>'. __METHOD__ .'</comment>');
-
         return [
-            'post-install-cmd' => ['onPostInstall', 1],
+            'pre-command-run' => ['onPostInstall', 1],
         ];
     }
 
