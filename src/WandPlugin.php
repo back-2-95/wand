@@ -18,6 +18,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     protected $composer;
     protected $io;
     static $once = false;
+    static $webroot = 'public';
 
     /**
      * {@inheritdoc}
@@ -46,7 +47,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents() : array
     {
         return [
             ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
@@ -56,14 +57,19 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         ];
     }
 
-    public function onPostInstall($event)
+    public function onPostInstall(Event $event)
+    {
+        $this->io->write('<comment>onPostInstall</comment>');
+    }
+
+    public function onPostUpdate(Event $event)
     {
         if (!self::$once) {
-            $this->io->write('<comment>' . $event->getName() . ' ekan kerran</comment>');
+            $this->io->write('<comment>onPostUpdate</comment>');
             self::$once = true;
         }
         else {
-            $this->io->write('<comment>' . $event->getName() . ' jo toisen kerran!</comment>');
+            $this->io->write('<comment>onPostUpdate jo toisen kerran!</comment>');
         }
         /*$query = [
             sprintf(
@@ -79,5 +85,15 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $answer = $this->io->ask(implode($query), '2');
 
         $this->io->write('<error>You answered '. $answer .'</error>');*/
+    }
+
+    /**
+     * Get absolute path to Drupal webroot.
+     *
+     * @param $project_root
+     * @return string Absolute path to webroot.
+     */
+    protected static function getDrupalRoot($project_root) : string {
+        return $project_root . DIRECTORY_SEPARATOR . self::$webroot;
     }
 }
