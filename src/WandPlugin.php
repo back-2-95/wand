@@ -53,8 +53,13 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
             ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
             ScriptEvents::POST_UPDATE_CMD => 'onPostUpdate',
             //ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
-            //PluginEvents::COMMAND => 'onPostInstall',
+            PluginEvents::COMMAND => 'onCmd',
         ];
+    }
+
+    public function onCmd($event)
+    {
+        $this->io->write('<comment>'. $event->getName() .'</comment>');
     }
 
     public function onPostInstall(Event $event)

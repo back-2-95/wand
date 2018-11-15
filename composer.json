@@ -39,6 +39,8 @@
         "test": [
             "@composer clear-cache --ansi",
             "@composer install -d test --no-suggest --ansi",
+            "@composer install -d test --no-suggest --ansi",
+            "@composer update -d test --no-suggest --ansi",
             "rm -rf test/public test/vendor test/composer.lock"
         ]
     }
