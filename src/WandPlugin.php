@@ -41,7 +41,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 
     public function onPostInstall($event)
     {
-        $this->io->write('<comment>'. __METHOD__ .'</comment>');
+        $this->io->write('<comment>'. __METHOD__ .' '. get_class($event). '</comment>');
 
         $query = [
             sprintf(
