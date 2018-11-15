@@ -16,7 +16,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
     protected $composer;
     protected $io;
-    protected $once = false;
+    static $once = false;
 
     /**
      * {@inheritdoc}
@@ -44,9 +44,9 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
 
     public function onPostInstall($event)
     {
-        if (!$this->once) {
+        if (!self::$once) {
             $this->io->write('<comment>' . $event->getName() . '</comment>');
-            $this->once = true;
+            self::$once = true;
         }
         else {
             $this->io->write('<comment>' . $event->getName() . ' jo toisen kerran!</comment>');
