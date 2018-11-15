@@ -10,6 +10,7 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
+use Composer\Script\ScriptEvents;
 
 class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -33,9 +34,8 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            PluginEvents::PRE_COMMAND_RUN => [
-                array('onPostInstall', 0)
-            ],
+            ScriptEvents::POST_UPDATE_CMD => 'onPostInstall',
+            PluginEvents::COMMAND => 'onPostInstall',
         ];
     }
 
