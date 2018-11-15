@@ -11,13 +11,30 @@ use Composer\Plugin\PluginInterface;
 
 class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
+    protected $composer;
+    protected $io;
+
     /**
      * {@inheritdoc}
      */
     public function activate(Composer $composer, IOInterface $io)
     {
         $this->composer = $composer;
+        $this->io = $io;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            'post-install-cmd' => ['onPostInstall', 1],
+        ];
+    }
+
+    public function onPostInstall($event)
+    {
         $query = [
             sprintf(
                 "\n  <question>%s</question>\n",
@@ -29,16 +46,8 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
             '  Make your selection <comment>(2)</comment>: ',
         ];
 
-        $answer = $io->ask(implode($query), '2');
+        $answer = $this->io->ask(implode($query), '2');
 
-        $io->write('<error>You answered '. $answer .'</error>');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
-    {
-        return [];
+        $this->io->write('<error>You answered '. $answer .'</error>');
     }
 }
