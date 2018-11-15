@@ -11,6 +11,7 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use Symfony\Component\Filesystem\Filesystem;
 
 class WandPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -27,6 +28,19 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
         $this->io = $io;
 
         //$this->io->write('<comment>'. __METHOD__ .'</comment>');
+        $fs = new Filesystem();
+        $root = static::getDrupalRoot(getcwd());
+
+        // Create the files directory with chmod 0777
+        if (!$fs->exists($root . '/sites/default/files')) {
+            $oldmask = umask(0);
+            $fs->mkdir($root . '/sites/default/files', 0777);
+            umask($oldmask);
+            $this->io->write("Create a sites/default/files directory with chmod 0777");
+        }
+        else {
+            $this->io->write("sites/default/files directory already exists");
+        }
     }
 
     /**
@@ -45,7 +59,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     public function onPostInstall($event)
     {
         if (!self::$once) {
-            $this->io->write('<comment>' . $event->getName() . '</comment>');
+            $this->io->write('<comment>' . $event->getName() . ' ekan kerran</comment>');
             self::$once = true;
         }
         else {
