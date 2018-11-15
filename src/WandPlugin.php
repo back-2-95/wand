@@ -51,7 +51,7 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     {
         return [
             ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
-            ScriptEvents::POST_UPDATE_CMD => 'onPostInstall',
+            ScriptEvents::POST_UPDATE_CMD => 'onPostUpdate',
             //ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
             //PluginEvents::COMMAND => 'onPostInstall',
         ];
