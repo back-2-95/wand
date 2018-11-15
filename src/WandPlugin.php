@@ -34,14 +34,14 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ScriptEvents::POST_INSTALL_CMD => 'onPostInstall',
+            ScriptEvents::POST_AUTOLOAD_DUMP => 'onPostInstall',
             //PluginEvents::COMMAND => 'onPostInstall',
         ];
     }
 
     public function onPostInstall(Event $event)
     {
-        $this->io->write('<comment>'. ScriptEvents::POST_INSTALL_CMD . '</comment>');
+        $this->io->write('<comment>'. ScriptEvents::POST_AUTOLOAD_DUMP . '</comment>');
 
         $query = [
             sprintf(
