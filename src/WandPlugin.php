@@ -7,6 +7,7 @@ namespace Druidfi\Composer;
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
+use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 
@@ -32,7 +33,9 @@ class WandPlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'pre-command-run' => ['onPostInstall', 1],
+            PluginEvents::PRE_COMMAND_RUN => [
+                array('onPostInstall', 0)
+            ],
         ];
     }
 
