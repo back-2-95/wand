@@ -21,12 +21,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "repositories": {
-        "packagist.org": {
-            "type": "composer",
-            "url": "https://repo-eu-uk-1.packagist.org"
-        }
-    },
     "autoload": {
         "psr-4": {
             "Druidfi\\Composer\\": "src/"
